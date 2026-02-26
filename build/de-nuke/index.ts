@@ -11,6 +11,7 @@ import {
     NUKE_COLLIDER_GLB_PATH,
     NUKE_FOREST_ARCH_PORTAL_GLB_PATH,
     NUKE_MODEL_GLB_PATH,
+    NUKE_PIPE_ROCK_PORTAL_GLB_PATH,
     NUKE_PIPE_ROOF_PORTAL_GLB_PATH,
     NUKE_SCENE_BLEND_PATH,
     NUKE_SPAWN_JSON_PATH,
@@ -32,6 +33,13 @@ export const nukeTasksBuild = (): readonly ITask[] => {
             NUKE_SCENE_BLEND_PATH,
             "portal.forest_arch",
             NUKE_FOREST_ARCH_PORTAL_GLB_PATH,
+        ),
+    )
+    tasks.push(
+        new BlenderPortalExport(
+            NUKE_SCENE_BLEND_PATH,
+            "portal.pipe_rock",
+            NUKE_PIPE_ROCK_PORTAL_GLB_PATH,
         ),
     )
     tasks.push(

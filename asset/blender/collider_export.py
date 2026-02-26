@@ -1,6 +1,8 @@
 import bpy
 import sys
 
+LIMITED_DISSOLVE_ANGLE_RADIANS = 0.08726646259971647
+
 
 def output_path():
     # blender -b file.blend --python export_collider_glb.py -- /path/to/output.glb

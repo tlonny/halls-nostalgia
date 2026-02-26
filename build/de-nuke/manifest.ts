@@ -3,6 +3,7 @@ import {
     NUKE_FOREST_ARCH_PORTAL_GLB_PATH,
     NUKE_MANIFEST_PATH,
     NUKE_MODEL_GLB_PATH,
+    NUKE_PIPE_ROCK_PORTAL_GLB_PATH,
     NUKE_PIPE_ROOF_PORTAL_GLB_PATH,
     NUKE_SPAWN_JSON_PATH,
 } from "@build/de-nuke/constant"
@@ -37,6 +38,10 @@ export class NukeManifestBuild implements ITask {
             pipe_roof: {
                 collider: NUKE_PIPE_ROOF_PORTAL_GLB_PATH,
                 link: "de_dust2.json#pipe_floor",
+            },
+            pipe_rock: {
+                collider: NUKE_PIPE_ROCK_PORTAL_GLB_PATH,
+                link: "blockfort.json#pipe_wall",
             },
         },
     })

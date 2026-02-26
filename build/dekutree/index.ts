@@ -14,13 +14,13 @@ import {
     DEKUTREE_SCENE_BLEND_PATH,
     DEKUTREE_SPAWN_JSON_PATH,
 } from "@build/dekutree/constant"
-import { DEKUTREE_TEXTURE_DEFINITIONS } from "@build/dekutree/material"
+import { DEKUTREE_MATERIAL_DEFINITIONS } from "@build/dekutree/material"
 import { DekutreeManifestBuild } from "@build/dekutree/manifest"
 
 export const dekutreeTasksBuild = (): readonly ITask[] => {
     const tasks: ITask[] = []
 
-    for (const definition of DEKUTREE_TEXTURE_DEFINITIONS) {
+    for (const definition of DEKUTREE_MATERIAL_DEFINITIONS) {
         tasks.push(new MagickImageResize(definition.textureSrc, definition.textureDst))
     }
 
