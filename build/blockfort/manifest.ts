@@ -25,7 +25,7 @@ export class BlockfortManifestBuild implements ITask {
         level: {
             model: BLOCKFORT_MODEL_GLB_PATH,
             collider: BLOCKFORT_COLLIDER_GLB_PATH,
-            //track: BLOCKFORT_BGM_OGG_DST_PATH,
+            track: BLOCKFORT_BGM_OGG_DST_PATH,
             spawn_path: BLOCKFORT_SPAWN_JSON_PATH,
             material: BLOCKFORT_MANIFEST_BUILD_MATERIAL,
         },
