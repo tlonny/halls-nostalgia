@@ -1,4 +1,5 @@
 import {
+    DUST2_ARCH_PORTAL_GLB_PATH,
     DUST2_COLLIDER_GLB_PATH,
     DUST2_MANIFEST_PATH,
     DUST2_MODEL_GLB_PATH,
@@ -29,6 +30,10 @@ export const dust2ManifestTaskBuild = (): ITask => {
             material: DUST2_MANIFEST_BUILD_MATERIAL,
         },
         portal: {
+            arch: {
+                collider: DUST2_ARCH_PORTAL_GLB_PATH,
+                link: "hangar.json#arch",
+            },
             pipe_floor: {
                 collider: DUST2_PIPE_FLOOR_PORTAL_GLB_PATH,
                 link: "de_nuke.json#pipe_roof",

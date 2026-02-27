@@ -8,6 +8,7 @@ import { MagickImageResize } from "@build/lib/magick"
 import { type ITask } from "makeboy"
 
 import {
+    DUST2_ARCH_PORTAL_GLB_PATH,
     DUST2_COLLIDER_GLB_PATH,
     DUST2_MODEL_GLB_PATH,
     DUST2_PIPE_FLOOR_PORTAL_GLB_PATH,
@@ -26,6 +27,7 @@ export const dust2TasksBuild = (): readonly ITask[] => {
 
     tasks.push(new BlenderColliderExport(DUST2_SCENE_BLEND_PATH, DUST2_COLLIDER_GLB_PATH))
     tasks.push(new BlenderModelExport(DUST2_SCENE_BLEND_PATH, DUST2_MODEL_GLB_PATH))
+    tasks.push(new BlenderPortalExport(DUST2_SCENE_BLEND_PATH, "portal.arch", DUST2_ARCH_PORTAL_GLB_PATH))
     tasks.push(
         new BlenderPortalExport(
             DUST2_SCENE_BLEND_PATH,
