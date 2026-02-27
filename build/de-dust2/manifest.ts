@@ -26,7 +26,7 @@ export const dust2ManifestTaskBuild = (): ITask => {
         level: {
             model: DUST2_MODEL_GLB_PATH,
             collider: DUST2_COLLIDER_GLB_PATH,
-            spawn_path: DUST2_SPAWN_JSON_PATH,
+            spawnPath: DUST2_SPAWN_JSON_PATH,
             material: DUST2_MANIFEST_BUILD_MATERIAL,
         },
         portal: {

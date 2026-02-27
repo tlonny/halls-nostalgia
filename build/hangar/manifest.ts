@@ -7,13 +7,18 @@ import {
     HANGAR_SPAWN_JSON_PATH,
 } from "@build/hangar/constant"
 import { HANGAR_MATERIAL_DEFINITIONS } from "@build/hangar/material"
-import { ManifestBuild, type ManifestBuildMaterial } from "@build/lib/manifest"
+import {
+    ManifestBuild,
+    TextureAddressing,
+    type ManifestBuildMaterial,
+} from "@build/lib/manifest"
 import { type ITask } from "makeboy"
 
 const HANGAR_MANIFEST_BUILD_MATERIAL: readonly ManifestBuildMaterial[] =
     HANGAR_MATERIAL_DEFINITIONS.map((definition) => ({
         name: definition.materialName,
         frames: [definition.textureDst],
+        textureAddressing: TextureAddressing.Nearest,
     }))
 
 export const hangarManifestTaskBuild = (): ITask => {
@@ -26,7 +31,7 @@ export const hangarManifestTaskBuild = (): ITask => {
             model: HANGAR_MODEL_GLB_PATH,
             collider: HANGAR_COLLIDER_GLB_PATH,
             track: HANGAR_BGM_OGG_DST_PATH,
-            spawn_path: HANGAR_SPAWN_JSON_PATH,
+            spawnPath: HANGAR_SPAWN_JSON_PATH,
             material: HANGAR_MANIFEST_BUILD_MATERIAL,
         },
         portal: {

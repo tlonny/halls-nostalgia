@@ -10,11 +10,16 @@ const MANIFEST_SPAWN_SCHEMA = tuple([number(), number(), number()])
 type ManifestColor = readonly [number, number, number, number]
 type ManifestVec3 = readonly [number, number, number]
 
+export enum TextureAddressing {
+    Linear = "Linear",
+    Nearest = "Nearest",
+}
+
 type ManifestMaterial = {
     frames: readonly string[]
     animation_speed?: number
     color?: ManifestColor
-    unlit?: boolean
+    texture_addressing?: TextureAddressing
 }
 
 type ManifestPortal = {
@@ -25,7 +30,6 @@ type ManifestPortal = {
 type ManifestLevel = {
     model: string
     collider?: string
-    lightmap?: string
     track?: string
     spawn?: ManifestVec3
     material: Record<string, ManifestMaterial>
@@ -44,8 +48,12 @@ type Manifest = {
     portal: Record<string, ManifestPortal>
 }
 
-export type ManifestBuildMaterial = ManifestMaterial & {
+export type ManifestBuildMaterial = {
     name: string
+    frames: readonly string[]
+    animationSpeed?: number
+    color?: ManifestColor
+    textureAddressing?: TextureAddressing
 }
 
 export type ManifestBuildPortal = ManifestPortal
@@ -55,9 +63,8 @@ export type ManifestBuildInput = {
     level: {
         model: string
         collider?: string
-        lightmap?: string
         track?: string
-        spawn_path?: string
+        spawnPath?: string
         material: readonly ManifestBuildMaterial[]
     }
     portal: Record<string, ManifestBuildPortal>
@@ -92,18 +99,27 @@ export class ManifestBuild implements ITask {
 
             const material: Record<string, ManifestMaterial> = {}
             for (const item of this.input.level.material) {
-                const { name, ...value } = item
-                material[name] = {
-                    ...value,
+                const materialValue: ManifestMaterial = {
                     frames: item.frames.map((frame) => manifestRelativePath(frame)),
                 }
+                if (item.animationSpeed !== undefined) {
+                    materialValue.animation_speed = item.animationSpeed
+                }
+                if (item.color) {
+                    materialValue.color = item.color
+                }
+                if (item.textureAddressing) {
+                    materialValue.texture_addressing = item.textureAddressing
+                }
+
+                material[item.name] = materialValue
             }
 
             let spawn: ManifestVec3 | undefined
-            if (this.input.level.spawn_path) {
+            if (this.input.level.spawnPath) {
                 spawn = parse(
                     MANIFEST_SPAWN_SCHEMA,
-                    await Bun.file(this.input.level.spawn_path).json(),
+                    await Bun.file(this.input.level.spawnPath).json(),
                 )
             }
 
@@ -121,9 +137,6 @@ export class ManifestBuild implements ITask {
             }
             if (this.input.level.collider) {
                 level.collider = manifestRelativePath(this.input.level.collider)
-            }
-            if (this.input.level.lightmap) {
-                level.lightmap = manifestRelativePath(this.input.level.lightmap)
             }
             if (this.input.level.track) {
                 level.track = manifestRelativePath(this.input.level.track)

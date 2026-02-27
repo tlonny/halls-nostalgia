@@ -24,7 +24,7 @@ export class DekutreeManifestBuild implements ITask {
         level: {
             model: DEKUTREE_MODEL_GLB_PATH,
             collider: DEKUTREE_COLLIDER_GLB_PATH,
-            spawn_path: DEKUTREE_SPAWN_JSON_PATH,
+            spawnPath: DEKUTREE_SPAWN_JSON_PATH,
             material: DEKUTREE_MANIFEST_BUILD_MATERIAL,
         },
         portal: {

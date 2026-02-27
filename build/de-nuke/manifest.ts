@@ -27,7 +27,7 @@ export const nukeManifestTaskBuild = (): ITask => {
         level: {
             model: NUKE_MODEL_GLB_PATH,
             collider: NUKE_COLLIDER_GLB_PATH,
-            spawn_path: NUKE_SPAWN_JSON_PATH,
+            spawnPath: NUKE_SPAWN_JSON_PATH,
             material: NUKE_MANIFEST_BUILD_MATERIAL,
         },
         portal: {
