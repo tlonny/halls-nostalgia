@@ -4,8 +4,8 @@ import {
     BlenderPortalExport,
     BlenderSpawnExport,
 } from "@build/lib/blender"
-import { type ITask } from "@build/lib/make"
 import { MagickImageResize } from "@build/lib/magick"
+import { type ITask } from "makeboy"
 
 import {
     DEKUTREE_COLLIDER_GLB_PATH,

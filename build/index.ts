@@ -2,10 +2,10 @@ import { blockfortTasksBuild } from "@build/blockfort"
 import { dekutreeTasksBuild } from "@build/dekutree"
 import { dust2TasksBuild } from "@build/de-dust2"
 import { nukeTasksBuild } from "@build/de-nuke"
-import { MakeManifest } from "@build/lib/make"
+import { Manifest } from "makeboy"
 
 if (import.meta.main) {
-    const manifest = new MakeManifest()
+    const manifest = new Manifest()
 
     for (const task of nukeTasksBuild()) {
         manifest.register(task)

@@ -1,6 +1,7 @@
 import { dirname, relative, sep } from "node:path"
 
-import { type ITask } from "@build/lib/make"
+import { GLOBAL_BUILD_MUTEX } from "@build/lib/mutex"
+import { type ITask } from "makeboy"
 import { number, parse, tuple } from "valibot"
 
 const LEVEL_MANIFEST_VERSION = "coco" as const
@@ -76,65 +77,71 @@ export class ManifestBuild implements ITask {
         return []
     }
 
-    buildAlways(): boolean {
+    force(): boolean {
         return true
     }
 
     async build(): Promise<void> {
-        const outputDirectory = dirname(this.outputPath)
-        const manifestRelativePath = (path: string): string => {
-            return relative(outputDirectory, path).split(sep).join("/")
-        }
-
-        const material: Record<string, ManifestMaterial> = {}
-        for (const item of this.input.level.material) {
-            const { name, ...value } = item
-            material[name] = {
-                ...value,
-                frames: item.frames.map((frame) => manifestRelativePath(frame)),
+        await GLOBAL_BUILD_MUTEX.lock()
+        try {
+            console.log(`[task] manifest build: ${this.outputPath}`)
+            const outputDirectory = dirname(this.outputPath)
+            const manifestRelativePath = (path: string): string => {
+                return relative(outputDirectory, path).split(sep).join("/")
             }
-        }
 
-        let spawn: ManifestVec3 | undefined
-        if (this.input.level.spawn_path) {
-            spawn = parse(
-                MANIFEST_SPAWN_SCHEMA,
-                await Bun.file(this.input.level.spawn_path).json(),
-            )
-        }
-
-        const portal: Record<string, ManifestPortal> = {}
-        for (const [name, entry] of Object.entries(this.input.portal)) {
-            portal[name] = {
-                collider: manifestRelativePath(entry.collider),
-                link: entry.link,
+            const material: Record<string, ManifestMaterial> = {}
+            for (const item of this.input.level.material) {
+                const { name, ...value } = item
+                material[name] = {
+                    ...value,
+                    frames: item.frames.map((frame) => manifestRelativePath(frame)),
+                }
             }
-        }
 
-        const level: ManifestLevel = {
-            model: manifestRelativePath(this.input.level.model),
-            material,
-        }
-        if (this.input.level.collider) {
-            level.collider = manifestRelativePath(this.input.level.collider)
-        }
-        if (this.input.level.lightmap) {
-            level.lightmap = manifestRelativePath(this.input.level.lightmap)
-        }
-        if (this.input.level.track) {
-            level.track = manifestRelativePath(this.input.level.track)
-        }
-        if (spawn) {
-            level.spawn = spawn
-        }
+            let spawn: ManifestVec3 | undefined
+            if (this.input.level.spawn_path) {
+                spawn = parse(
+                    MANIFEST_SPAWN_SCHEMA,
+                    await Bun.file(this.input.level.spawn_path).json(),
+                )
+            }
 
-        const manifest: Manifest = {
-            _version: LEVEL_MANIFEST_VERSION,
-            meta: this.input.meta,
-            level,
-            portal,
-        }
+            const portal: Record<string, ManifestPortal> = {}
+            for (const [name, entry] of Object.entries(this.input.portal)) {
+                portal[name] = {
+                    collider: manifestRelativePath(entry.collider),
+                    link: entry.link,
+                }
+            }
 
-        await Bun.write(this.outputPath, JSON.stringify(manifest, null, 2) + "\n")
+            const level: ManifestLevel = {
+                model: manifestRelativePath(this.input.level.model),
+                material,
+            }
+            if (this.input.level.collider) {
+                level.collider = manifestRelativePath(this.input.level.collider)
+            }
+            if (this.input.level.lightmap) {
+                level.lightmap = manifestRelativePath(this.input.level.lightmap)
+            }
+            if (this.input.level.track) {
+                level.track = manifestRelativePath(this.input.level.track)
+            }
+            if (spawn) {
+                level.spawn = spawn
+            }
+
+            const manifest: Manifest = {
+                _version: LEVEL_MANIFEST_VERSION,
+                meta: this.input.meta,
+                level,
+                portal,
+            }
+
+            await Bun.write(this.outputPath, JSON.stringify(manifest, null, 2) + "\n")
+        } finally {
+            GLOBAL_BUILD_MUTEX.unlock()
+        }
     }
 }

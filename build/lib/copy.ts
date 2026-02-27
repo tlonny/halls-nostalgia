@@ -1,7 +1,8 @@
 import { mkdir } from "node:fs/promises"
 import { dirname } from "node:path"
 
-import { type ITask } from "@build/lib/make"
+import { GLOBAL_BUILD_MUTEX } from "@build/lib/mutex"
+import { type ITask } from "makeboy"
 
 export class FileCopy implements ITask {
     constructor(
@@ -18,7 +19,13 @@ export class FileCopy implements ITask {
     }
 
     async build(): Promise<void> {
-        await mkdir(dirname(this.dstPath), { recursive: true })
-        await Bun.write(this.dstPath, Bun.file(this.srcPath))
+        await GLOBAL_BUILD_MUTEX.lock()
+        try {
+            console.log(`[task] file copy: ${this.srcPath} -> ${this.dstPath}`)
+            await mkdir(dirname(this.dstPath), { recursive: true })
+            await Bun.write(this.dstPath, Bun.file(this.srcPath))
+        } finally {
+            GLOBAL_BUILD_MUTEX.unlock()
+        }
     }
 }

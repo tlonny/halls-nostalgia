@@ -8,7 +8,7 @@ import {
 } from "@build/blockfort/constant"
 import { BLOCKFORT_MATERIAL_DEFINITIONS } from "@build/blockfort/material"
 import { ManifestBuild, type ManifestBuildMaterial } from "@build/lib/manifest"
-import { type ITask } from "@build/lib/make"
+import { type ITask } from "makeboy"
 
 const BLOCKFORT_MANIFEST_BUILD_MATERIAL: readonly ManifestBuildMaterial[] =
     BLOCKFORT_MATERIAL_DEFINITIONS.map((definition) => ({
@@ -45,8 +45,8 @@ export class BlockfortManifestBuild implements ITask {
         return this.manifestBuildTask.dependencies()
     }
 
-    buildAlways(): boolean {
-        return this.manifestBuildTask.buildAlways()
+    force(): boolean {
+        return this.manifestBuildTask.force()
     }
 
     build(): Promise<void> {

@@ -4,8 +4,8 @@ import {
     BlenderPortalExport,
     BlenderSpawnExport,
 } from "@build/lib/blender"
-import { type ITask } from "@build/lib/make"
 import { MagickImageResize } from "@build/lib/magick"
+import { type ITask } from "makeboy"
 
 import {
     DUST2_COLLIDER_GLB_PATH,
@@ -15,7 +15,7 @@ import {
     DUST2_SPAWN_JSON_PATH,
 } from "@build/de-dust2/constant"
 import { DUST2_MATERIAL_DEFINITIONS } from "@build/de-dust2/material"
-import { Dust2ManifestBuild } from "@build/de-dust2/manifest"
+import { dust2ManifestTaskBuild } from "@build/de-dust2/manifest"
 
 export const dust2TasksBuild = (): readonly ITask[] => {
     const tasks: ITask[] = []
@@ -34,7 +34,7 @@ export const dust2TasksBuild = (): readonly ITask[] => {
         ),
     )
     tasks.push(new BlenderSpawnExport(DUST2_SCENE_BLEND_PATH, DUST2_SPAWN_JSON_PATH))
-    tasks.push(new Dust2ManifestBuild())
+    tasks.push(dust2ManifestTaskBuild())
 
     return tasks
 }

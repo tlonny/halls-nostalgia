@@ -1,7 +1,8 @@
 import { resolve } from "node:path"
 
-import { type ITask } from "@build/lib/make"
 import { ROOT_DIRECTORY } from "@build/lib/root"
+import { GLOBAL_BUILD_MUTEX } from "@build/lib/mutex"
+import { type ITask } from "makeboy"
 
 const COLLIDER_EXPORT_SCRIPT_PATH = resolve(ROOT_DIRECTORY, "asset/blender/collider_export.py")
 const MODEL_EXPORT_SCRIPT_PATH = resolve(ROOT_DIRECTORY, "asset/blender/model_export.py")
@@ -49,7 +50,13 @@ export class BlenderColliderExport implements ITask {
     }
 
     async build(): Promise<void> {
-        await blenderExec(COLLIDER_EXPORT_SCRIPT_PATH, this.blendPath, [this.outputPath])
+        await GLOBAL_BUILD_MUTEX.lock()
+        try {
+            console.log(`[task] collider export: ${this.blendPath} -> ${this.outputPath}`)
+            await blenderExec(COLLIDER_EXPORT_SCRIPT_PATH, this.blendPath, [this.outputPath])
+        } finally {
+            GLOBAL_BUILD_MUTEX.unlock()
+        }
     }
 }
 
@@ -68,7 +75,13 @@ export class BlenderModelExport implements ITask {
     }
 
     async build(): Promise<void> {
-        await blenderExec(MODEL_EXPORT_SCRIPT_PATH, this.blendPath, [this.outputPath])
+        await GLOBAL_BUILD_MUTEX.lock()
+        try {
+            console.log(`[task] model export: ${this.blendPath} -> ${this.outputPath}`)
+            await blenderExec(MODEL_EXPORT_SCRIPT_PATH, this.blendPath, [this.outputPath])
+        } finally {
+            GLOBAL_BUILD_MUTEX.unlock()
+        }
     }
 }
 
@@ -88,7 +101,15 @@ export class BlenderPortalExport implements ITask {
     }
 
     async build(): Promise<void> {
-        await blenderExec(PORTAL_EXPORT_SCRIPT_PATH, this.blendPath, [this.objectName, this.outputPath])
+        await GLOBAL_BUILD_MUTEX.lock()
+        try {
+            console.log(
+                `[task] portal export (${this.objectName}): ${this.blendPath} -> ${this.outputPath}`,
+            )
+            await blenderExec(PORTAL_EXPORT_SCRIPT_PATH, this.blendPath, [this.objectName, this.outputPath])
+        } finally {
+            GLOBAL_BUILD_MUTEX.unlock()
+        }
     }
 }
 
@@ -107,6 +128,12 @@ export class BlenderSpawnExport implements ITask {
     }
 
     async build(): Promise<void> {
-        await blenderExec(SPAWN_EXPORT_SCRIPT_PATH, this.blendPath, [this.outputPath])
+        await GLOBAL_BUILD_MUTEX.lock()
+        try {
+            console.log(`[task] spawn export: ${this.blendPath} -> ${this.outputPath}`)
+            await blenderExec(SPAWN_EXPORT_SCRIPT_PATH, this.blendPath, [this.outputPath])
+        } finally {
+            GLOBAL_BUILD_MUTEX.unlock()
+        }
     }
 }

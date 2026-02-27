@@ -16,8 +16,8 @@ import {
     BlenderSpawnExport,
 } from "@build/lib/blender"
 import { FileCopy } from "@build/lib/copy"
-import { type ITask } from "@build/lib/make"
 import { MagickImageResize } from "@build/lib/magick"
+import { type ITask } from "makeboy"
 
 export const blockfortTasksBuild = (): readonly ITask[] => {
     const tasks: ITask[] = []

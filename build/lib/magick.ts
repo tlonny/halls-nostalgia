@@ -1,7 +1,8 @@
 import { mkdir } from "node:fs/promises"
 import { dirname } from "node:path"
 
-import { type ITask } from "@build/lib/make"
+import { GLOBAL_BUILD_MUTEX } from "@build/lib/mutex"
+import { type ITask } from "makeboy"
 
 const SQUARE_SIZES = [64, 128, 256, 512] as const
 
@@ -58,7 +59,13 @@ export class MagickImageResize implements ITask {
     }
 
     async build(): Promise<void> {
-        await mkdir(dirname(this.dstPath), { recursive: true })
-        await magickResize(this.srcPath, this.dstPath)
+        await GLOBAL_BUILD_MUTEX.lock()
+        try {
+            console.log(`[task] texture resize: ${this.srcPath} -> ${this.dstPath}`)
+            await mkdir(dirname(this.dstPath), { recursive: true })
+            await magickResize(this.srcPath, this.dstPath)
+        } finally {
+            GLOBAL_BUILD_MUTEX.unlock()
+        }
     }
 }

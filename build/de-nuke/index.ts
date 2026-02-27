@@ -4,8 +4,8 @@ import {
     BlenderPortalExport,
     BlenderSpawnExport,
 } from "@build/lib/blender"
-import { type ITask } from "@build/lib/make"
 import { MagickImageResize } from "@build/lib/magick"
+import { type ITask } from "makeboy"
 
 import {
     NUKE_COLLIDER_GLB_PATH,
@@ -17,7 +17,7 @@ import {
     NUKE_SPAWN_JSON_PATH,
 } from "@build/de-nuke/constant"
 import { NUKE_MATERIAL_DEFINITIONS } from "@build/de-nuke/material"
-import { NukeManifestBuild } from "@build/de-nuke/manifest"
+import { nukeManifestTaskBuild } from "@build/de-nuke/manifest"
 
 export const nukeTasksBuild = (): readonly ITask[] => {
     const tasks: ITask[] = []
@@ -50,7 +50,7 @@ export const nukeTasksBuild = (): readonly ITask[] => {
         ),
     )
     tasks.push(new BlenderSpawnExport(NUKE_SCENE_BLEND_PATH, NUKE_SPAWN_JSON_PATH))
-    tasks.push(new NukeManifestBuild())
+    tasks.push(nukeManifestTaskBuild())
 
     return tasks
 }

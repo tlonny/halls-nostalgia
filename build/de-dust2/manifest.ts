@@ -7,7 +7,7 @@ import {
 } from "@build/de-dust2/constant"
 import { DUST2_MATERIAL_DEFINITIONS } from "@build/de-dust2/material"
 import { ManifestBuild, type ManifestBuildMaterial } from "@build/lib/manifest"
-import { type ITask } from "@build/lib/make"
+import { type ITask } from "makeboy"
 
 const DUST2_MANIFEST_BUILD_MATERIAL: readonly ManifestBuildMaterial[] = DUST2_MATERIAL_DEFINITIONS.map(
     (definition) => ({
@@ -16,8 +16,8 @@ const DUST2_MANIFEST_BUILD_MATERIAL: readonly ManifestBuildMaterial[] = DUST2_MA
     }),
 )
 
-export class Dust2ManifestBuild implements ITask {
-    private readonly manifestBuildTask = new ManifestBuild(DUST2_MANIFEST_PATH, {
+export const dust2ManifestTaskBuild = (): ITask => {
+    const manifestBuildTask = new ManifestBuild(DUST2_MANIFEST_PATH, {
         meta: {
             name: "de_dust2",
             author: "tlonny <timlonsdale@gmail.com>",
@@ -36,19 +36,18 @@ export class Dust2ManifestBuild implements ITask {
         },
     })
 
-    target(): string {
-        return this.manifestBuildTask.target()
-    }
-
-    dependencies(): readonly string[] {
-        return this.manifestBuildTask.dependencies()
-    }
-
-    buildAlways(): boolean {
-        return this.manifestBuildTask.buildAlways()
-    }
-
-    build(): Promise<void> {
-        return this.manifestBuildTask.build()
+    return {
+        target(): string {
+            return manifestBuildTask.target()
+        },
+        dependencies(): readonly string[] {
+            return manifestBuildTask.dependencies()
+        },
+        force(): boolean {
+            return manifestBuildTask.force()
+        },
+        build(): Promise<void> {
+            return manifestBuildTask.build()
+        },
     }
 }

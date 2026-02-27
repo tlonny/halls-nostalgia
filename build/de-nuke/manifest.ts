@@ -9,7 +9,7 @@ import {
 } from "@build/de-nuke/constant"
 import { NUKE_MATERIAL_DEFINITIONS } from "@build/de-nuke/material"
 import { ManifestBuild, type ManifestBuildMaterial } from "@build/lib/manifest"
-import { type ITask } from "@build/lib/make"
+import { type ITask } from "makeboy"
 
 const NUKE_MANIFEST_BUILD_MATERIAL: readonly ManifestBuildMaterial[] = NUKE_MATERIAL_DEFINITIONS.map(
     (definition) => ({
@@ -18,8 +18,8 @@ const NUKE_MANIFEST_BUILD_MATERIAL: readonly ManifestBuildMaterial[] = NUKE_MATE
     }),
 )
 
-export class NukeManifestBuild implements ITask {
-    private readonly manifestBuildTask = new ManifestBuild(NUKE_MANIFEST_PATH, {
+export const nukeManifestTaskBuild = (): ITask => {
+    const manifestBuildTask = new ManifestBuild(NUKE_MANIFEST_PATH, {
         meta: {
             name: "de_nuke",
             author: "tlonny <timlonsdale@gmail.com>",
@@ -46,19 +46,18 @@ export class NukeManifestBuild implements ITask {
         },
     })
 
-    target(): string {
-        return this.manifestBuildTask.target()
-    }
-
-    dependencies(): readonly string[] {
-        return this.manifestBuildTask.dependencies()
-    }
-
-    buildAlways(): boolean {
-        return this.manifestBuildTask.buildAlways()
-    }
-
-    build(): Promise<void> {
-        return this.manifestBuildTask.build()
+    return {
+        target(): string {
+            return manifestBuildTask.target()
+        },
+        dependencies(): readonly string[] {
+            return manifestBuildTask.dependencies()
+        },
+        force(): boolean {
+            return manifestBuildTask.force()
+        },
+        build(): Promise<void> {
+            return manifestBuildTask.build()
+        },
     }
 }

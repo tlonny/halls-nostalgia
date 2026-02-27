@@ -7,7 +7,7 @@ import {
 } from "@build/dekutree/constant"
 import { DEKUTREE_MATERIAL_DEFINITIONS } from "@build/dekutree/material"
 import { ManifestBuild, type ManifestBuildMaterial } from "@build/lib/manifest"
-import { type ITask } from "@build/lib/make"
+import { type ITask } from "makeboy"
 
 const DEKUTREE_MANIFEST_BUILD_MATERIAL: readonly ManifestBuildMaterial[] =
     DEKUTREE_MATERIAL_DEFINITIONS.map((definition) => ({
@@ -43,8 +43,8 @@ export class DekutreeManifestBuild implements ITask {
         return this.manifestBuildTask.dependencies()
     }
 
-    buildAlways(): boolean {
-        return this.manifestBuildTask.buildAlways()
+    force(): boolean {
+        return this.manifestBuildTask.force()
     }
 
     build(): Promise<void> {
