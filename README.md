@@ -46,3 +46,12 @@ And then access the manifests via localhost.
 Any help tidying up or improving existing levels is appreciated and welcome.
 
 If you want to contribute novel levels, create a new repository for that level set and then contribute here by updating portal links/manifests to connect to that repository's published manifests.
+
+## Credits
+
+- Doom Hangar mesh by [dad34853](https://models.spriters-resource.com/ms_dos/doomdoomii/asset/323264/)
+- Doom background music, "At Doom's Gate - Hangar" HQ Remix by [Pieces of 8-bit](https://downloads.khinsider.com/game-soundtracks/album/doom-1993-hq-remake-by-pieces-of-8-bit-2022)
+- CS 1.6 de_nuke mesh by [ViGmaezBoy](https://models.spriters-resource.com/pc_computer/counterstrike16/asset/310951/)
+- CS 1.6 de_dust2 mesh by [ViGmaezBoy](https://models.spriters-resource.com/pc_computer/counterstrike16/asset/310949/)
+- Zelda OOT Deku Tree mesh by [alecpike](https://models.spriters-resource.com/nintendo_64/thelegendofzeldaocarinaoftime/asset/283783/)
+- Mario Kart 64 Battle Block Fort mesh by [Jay6T4](https://models.spriters-resource.com/nintendo_64/mariokart64/asset/311924/)
