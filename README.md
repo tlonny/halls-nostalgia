@@ -50,8 +50,10 @@ If you want to contribute novel levels, create a new repository for that level s
 ## Credits
 
 - Doom Hangar mesh by [dad34853](https://models.spriters-resource.com/ms_dos/doomdoomii/asset/323264/)
-- Doom background music, "At Doom's Gate - Hangar" HQ Remix by [Pieces of 8-bit](https://downloads.khinsider.com/game-soundtracks/album/doom-1993-hq-remake-by-pieces-of-8-bit-2022)
+- Doom background music, "At Doom's Gate" from [khinsider](https://downloads.khinsider.com/game-soundtracks/album/doom-pc/02.%2520At%2520Doom%2527s%2520Gate.mp3)
 - CS 1.6 de_nuke mesh by [ViGmaezBoy](https://models.spriters-resource.com/pc_computer/counterstrike16/asset/310951/)
 - CS 1.6 de_dust2 mesh by [ViGmaezBoy](https://models.spriters-resource.com/pc_computer/counterstrike16/asset/310949/)
 - Zelda OOT Deku Tree mesh by [alecpike](https://models.spriters-resource.com/nintendo_64/thelegendofzeldaocarinaoftime/asset/283783/)
+- Zelda Majora's Mask moon mesh by [Jay6T4](https://models.spriters-resource.com/nintendo_64/thelegendofzeldamajorasmask/asset/311650/)
+- Zelda OOT Deku Tree music track, "Kokiri Forest" from [khinsider](https://downloads.khinsider.com/game-soundtracks/album/the-legend-of-zelda-ocarina-of-time-3d-original-soundtrack/05.%2520Kokiri%2520Forest.mp3)
 - Mario Kart 64 Battle Block Fort mesh by [Jay6T4](https://models.spriters-resource.com/nintendo_64/mariokart64/asset/311924/)

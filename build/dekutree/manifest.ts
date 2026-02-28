@@ -1,4 +1,5 @@
 import {
+    DEKUTREE_BGM_OGG_DST_PATH,
     DEKUTREE_COLLIDER_GLB_PATH,
     DEKUTREE_FOREST_PORTAL_GLB_PATH,
     DEKUTREE_MANIFEST_PATH,
@@ -24,6 +25,7 @@ export class DekutreeManifestBuild implements ITask {
         level: {
             model: DEKUTREE_MODEL_GLB_PATH,
             collider: DEKUTREE_COLLIDER_GLB_PATH,
+            track: DEKUTREE_BGM_OGG_DST_PATH,
             spawnPath: DEKUTREE_SPAWN_JSON_PATH,
             material: DEKUTREE_MANIFEST_BUILD_MATERIAL,
         },
